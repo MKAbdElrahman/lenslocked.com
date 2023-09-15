@@ -3,6 +3,28 @@ on:
   push:
     branches: [ main ]
 jobs:
+  test:
+    name: Test Application
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.21
+      - name: Checkout code into the Go module directory
+        uses: actions/checkout@v3
+      - name: Run tests
+        run: make test
+      - name: Coverahe Check
+        run: make coverage
+      - name: Generate Report
+        run: make report
+
+      - name: Archive reports directory
+        uses: actions/upload-artifact@v3
+        with:
+          name: reports
+          path: ./reports
   build:
     runs-on: ubuntu-latest
     steps:
