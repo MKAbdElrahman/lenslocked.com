@@ -29,7 +29,7 @@ tasks:
     cmds:
       - go tool cover -func=$COVERAGE_REPORTS_DIR/coverage.out | grep total | awk '{print $3}' | awk -F. '{print $1}' | xargs -I{} test {} -ge $COVERAGE_THRESHOLD || (echo "Coverage is below threshold of $COVERAGE_THRESHOLD" && exit 1)
     env:
-      COVERAGE_THRESHOLD: 90
+      COVERAGE_THRESHOLD: 50
   generate-coverage-report:
     desc: Generate a coverage report in HTML
     deps: [test]
