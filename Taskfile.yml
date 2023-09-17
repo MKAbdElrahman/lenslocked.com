@@ -41,7 +41,11 @@ tasks:
     cmds:
       - mkdir -p $BIN_DIR
       - go build -o $BIN_DIR/lenslocked ./cmd/server/main.go
-
+  run:
+    desc: Run the application
+    deps: [build]
+    cmds:
+      - $BIN_DIR/lenslocked
   clean:
     desc: Remove all generated files
     cmds:
