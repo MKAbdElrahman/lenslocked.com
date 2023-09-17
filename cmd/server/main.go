@@ -14,6 +14,7 @@ func main() {
 
 	router.HandleFunc("/", home)
 	router.HandleFunc("/contact", contact)
+	router.HandleFunc("/faq", faq)
 
 	addr := ":8080"
 	log.Printf("Starting server on %s", addr)
@@ -36,4 +37,8 @@ func contact(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "<h1>To get in touch, please send an email "+
 		"to <a href=\"mailto:support@lenslocked.com\">"+
 		"support@lenslocked.com</a>.</h1>")
+}
+
+func faq(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprint(w, "<h1>FAQ</h1>")
 }
