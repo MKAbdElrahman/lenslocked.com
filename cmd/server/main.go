@@ -4,18 +4,20 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 func main() {
 
-	mux := http.NewServeMux()
+	router := mux.NewRouter()
 
-	mux.HandleFunc("/", home)
-	mux.HandleFunc("/contact", contact)
+	router.HandleFunc("/", home)
+	router.HandleFunc("/contact", contact)
 
 	addr := ":8080"
 	log.Printf("Starting server on %s", addr)
-	http.ListenAndServe(addr, mux)
+	http.ListenAndServe(addr, router)
 
 }
 
@@ -35,4 +37,3 @@ func contact(w http.ResponseWriter, r *http.Request) {
 		"to <a href=\"mailto:support@lenslocked.com\">"+
 		"support@lenslocked.com</a>.</h1>")
 }
-
