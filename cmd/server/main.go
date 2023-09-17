@@ -18,10 +18,12 @@ func main() {
 
 	router.NotFoundHandler = http.HandlerFunc(notFound)
 
-	
 	addr := ":8080"
 	log.Printf("Starting server on %s", addr)
-	http.ListenAndServe(addr, router)
+	err := http.ListenAndServe(addr, router)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 }
 
