@@ -11,18 +11,40 @@ tasks:
       - wget "https://go.dev/dl/go$GO_VERSION.linux-amd64.tar.gz"
       - sudo rm -rf $GO_INSTALL_DIR/go
       - sudo tar -C $GO_INSTALL_DIR -xzf go$GO_VERSION.linux-amd64.tar.gz
-      - echo "export PATH=$GO_INSTALL_DIR/go/bin:$PATH" >> $HOME/.bashrc
+      - echo 'export PATH=$PATH:/usr/local/go/bin' >> $HOME/.bashrc
+      - echo 'export GOPATH=$HOME/go' >> $HOME/.bashrc
+      - echo 'export PATH=$PATH:$GOPATH/bin' >> $HOME/.bashrc
+      - echo 'export GO111MODULE=on' >> $HOME/.bashrc
       - rm go$GO_VERSION.linux-amd64.tar.gz
       - go version
     env:
       GO_VERSION: 1.21.1
       GO_INSTALL_DIR: /usr/local
-
+  install-gotestdox:
+    desc: Install gotestdox
+    cmds:
+      - go install github.com/bitfield/gotestdox/cmd/gotestdox@latest
+  install-errcheck:
+    desc: Install errcheck
+    cmds:
+      - go install github.com/kisielk/errcheck@latest
   test:
     desc: Run all tests with coverage
     cmds:
       - mkdir -p $COVERAGE_REPORTS_DIR
       - go test ./... -coverprofile=$COVERAGE_REPORTS_DIR/coverage.out
+
+
+  gotestdox:
+    desc: Formats Go test results as readable documentation
+    deps: [install-gotestdox]
+    cmds:
+      - gotestdox ./...
+  errcheck:
+    desc: Check for unchecked errors
+    deps: [install-errcheck]
+    cmds:
+      - errcheck ./...
   # coverage-check:
   #   desc: Check that coverage is above a threshold
   #   deps: [test]
@@ -35,7 +57,10 @@ tasks:
     deps: [test]
     cmds:
       - go tool cover -html=$COVERAGE_REPORTS_DIR/coverage.out -o $COVERAGE_REPORTS_DIR/coverage.html
-
+  check-format:
+    desc: Check code formatting
+    cmds:
+      - go fmt ./...
   build:
     desc: Build the application
     cmds:
