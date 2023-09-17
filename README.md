@@ -6,6 +6,9 @@ A photo sharing website written in Go following the [usegolang.com](https://www.
 
 - Go version 1.21
 
+## Design Choices
+- Routing: [gorilla/mux](https://github.com/gorilla/mux)
+
 ## Setup
 
 Developmnet expected to be done on a Linux machine. If you are using Windows, you can use the [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to run the project.
