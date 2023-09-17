@@ -1,22 +1,38 @@
 package main
 
-import "net/http"
-
-func hello(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	w.Header().Set("Content-Type", "text/plain")
-	w.Write([]byte("Hello, world!"))
-}
-
-func about(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusOK)
-	w.Header().Set("Content-Type", "text/plain")
-	w.Write([]byte("About"))
-}
-
+import (
+	"fmt"
+	"log"
+	"net/http"
+)
 
 func main() {
-	http.HandleFunc("/", hello)
-	http.HandleFunc("/about", about)
-	http.ListenAndServe(":8080", nil)
+
+	mux := http.NewServeMux()
+
+	mux.HandleFunc("/", home)
+	mux.HandleFunc("/contact", contact)
+
+	addr := ":8080"
+	log.Printf("Starting server on %s", addr)
+	http.ListenAndServe(addr, mux)
+
 }
+
+func home(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprint(w, "<h1>We could not find the page you "+
+			"were looking for :(</h1>"+
+			"<p>Please email us if you keep being sent to an "+
+			"invalid page.</p>")
+		return
+	}
+	fmt.Fprint(w, "<h1>Welcome to my awesome site!</h1>")
+}
+func contact(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprint(w, "<h1>To get in touch, please send an email "+
+		"to <a href=\"mailto:support@lenslocked.com\">"+
+		"support@lenslocked.com</a>.</h1>")
+}
+
