@@ -24,27 +24,26 @@ tasks:
     desc: Install gotestdox
     cmds:
       - go install github.com/bitfield/gotestdox/cmd/gotestdox@latest
-  install-errcheck:
-    desc: Install errcheck
+  install-golangci-lint:
+    desc: Install golangci-lint
     cmds:
-      - go install github.com/kisielk/errcheck@latest
+      - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.54.2
+  lint:
+    desc: Static code analysis
+    deps: [install-golangci-lint]
+    cmds:
+      - golangci-lint run -v
   test:
     desc: Run all tests with coverage
     cmds:
       - mkdir -p $COVERAGE_REPORTS_DIR
       - go test ./... -coverprofile=$COVERAGE_REPORTS_DIR/coverage.out
 
-
   gotestdox:
     desc: Formats Go test results as readable documentation
     deps: [install-gotestdox]
     cmds:
       - gotestdox ./...
-  errcheck:
-    desc: Check for unchecked errors
-    deps: [install-errcheck]
-    cmds:
-      - errcheck ./...
   # coverage-check:
   #   desc: Check that coverage is above a threshold
   #   deps: [test]

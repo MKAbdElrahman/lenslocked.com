@@ -1,0 +1,9 @@
+linters:
+  disable-all: true
+  enable:
+    - errcheck
+    - govet
+output:
+  format: colored-line-number
+  print-issued-lines: false
+  print-linter-name: true
