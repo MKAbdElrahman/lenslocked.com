@@ -10,6 +10,9 @@ A photo sharing website written in Go following the [usegolang.com](https://www.
 
 Developmnet expected to be done on a Linux machine. If you are using Windows, you can use the [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to run the project.
 
+
+
+
 The project uses `Taskfiles` to manage the development tasks. You can find the installation instructions [here](https://taskfile.dev/installation/).
 
 You can run the following tasks to get started:
@@ -24,6 +27,9 @@ You can also run `task -a` to see all the available tasks.
 All the tasks are defined in `Taskfile.yml`.
 
 The CI pipeline is defined in `.github/workflows/pipeline.yml`. It runs the tests, builds the application and uploads the artifacts to GitHub releases. The pipeline uses `task` to run the tasks.
+
+
+The project uses [air](https://github.com/cosmtrek/air) for dynamic reloading. There is a configuration file `.air.toml` which also uses task to rebuild for building. There are also other configs which you can customize 
 ## Design Choices
 - Routing: [gorilla/mux](https://github.com/gorilla/mux)
 
