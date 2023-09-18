@@ -29,7 +29,8 @@ All the tasks are defined in `Taskfile.yml`.
 The CI pipeline is defined in `.github/workflows/pipeline.yml`. It runs the tests, builds the application and uploads the artifacts to GitHub releases. The pipeline uses `task` to run the tasks.
 
 
-The project uses [air](https://github.com/cosmtrek/air) for dynamic reloading. There is a configuration file `.air.toml` which also uses task to rebuild for building. There are also other configs which you can customize 
+
+The project uses [air](https://github.com/cosmtrek/air) for dynamic reloading. There is a configuration file `.air.toml` which also uses task to rebuild for building. There are also other configs which you can customize. To get started install air and type `air` in you shell.
 ## Design Choices
 - Routing: [gorilla/mux](https://github.com/gorilla/mux)
 
